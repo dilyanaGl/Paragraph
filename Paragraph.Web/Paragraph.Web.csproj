@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Paragraph-master\Paragraph.Data.Models\Paragraph.Data.Models.csproj" />
-    <ProjectReference Include="..\Paragraph-master\Paragraph.Data\Paragraph.Data.csproj" />
+    <ProjectReference Include="..\Paragraph.Data.Models\Paragraph.Data.Models.csproj" />
+    <ProjectReference Include="..\Paragraph.Data\Paragraph.Data.csproj" />
   </ItemGroup>
 
 </Project>
