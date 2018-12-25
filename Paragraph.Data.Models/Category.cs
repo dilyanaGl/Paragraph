@@ -10,6 +10,6 @@ namespace Paragraph.Data.Models
     {
         public string Name { get; set; }
 
-        public ICollection<Article> Articles { get; set; } = new HashSet<Article>();
+        public virtual ICollection<Article> Articles { get; set; } = new HashSet<Article>();
     }
 }

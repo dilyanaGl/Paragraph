@@ -13,12 +13,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
+
 namespace Paragraph.Web
 {
     using Data;
     using Data.Models;
     using Data.Common;
     using Paragraph.Services.DataServices;
+    using Services.Mapping;
+    using Services.DataServices.Models.Article;
+    using Services.DataServices.Models.Home;
 
     public class Startup
     {
@@ -55,6 +59,15 @@ namespace Paragraph.Web
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<ICategoryService, CategoryService>();
+
+
+            // Register Automapper
+
+            AutoMapperConfig.RegisterMappings(
+                typeof(ArticleViewModel).Assembly,
+                typeof(IndexArticleViewModel).Assembly
+                );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
