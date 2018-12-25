@@ -141,7 +141,11 @@ namespace Paragraph.Data.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<bool>("IsApproved");
+
                     b.Property<string>("Picture");
+
+                    b.Property<DateTime>("PublishedDate");
 
                     b.Property<string>("Title");
 

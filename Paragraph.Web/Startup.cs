@@ -17,6 +17,8 @@ namespace Paragraph.Web
 {
     using Data;
     using Data.Models;
+    using Data.Common;
+    using Paragraph.Services.DataServices;
 
     public class Startup
     {
@@ -45,6 +47,14 @@ namespace Paragraph.Web
                 .AddEntityFrameworkStores<ParagraphContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            
+
+            // Application Services:
+
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddTransient<IArticleService, ArticleService>();
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

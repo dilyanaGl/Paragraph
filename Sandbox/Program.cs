@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Paragraph.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace Sandbox
 {
@@ -37,22 +38,23 @@ namespace Sandbox
 
         private static void SandboxCode(IServiceProvider serviceProvider)
         {
-            var context = serviceProvider.GetService<ParagraphContext>();       
-            
-            var categories = SeedCategories();
-            context.Categories.AddRange(categories);
-            context.SaveChanges();
+            var context = serviceProvider.GetService<ParagraphContext>();
+
+            //var categories = SeedCategories();
+            //context.Categories.AddRange(categories);
+            //context.SaveChanges();
 
             var articles = ReadArticles();
 
             var rnd = new Random();
-          
 
+            var author = context.Users.FirstOrDefault();
             foreach (var article in articles)
             {
                 int categoryId = rnd.Next(1, context.Categories.Count() - 1);
-                article.Category = context.Categories.Find(categoryId);            
-             
+                article.Category = context.Categories.Find(categoryId);
+                article.Author = author;
+
             }
 
             context.Articles.AddRange(articles);
@@ -67,11 +69,11 @@ namespace Sandbox
 
                 "Character writing",
                 "World Building",
-                "Genre", 
+                "Genre",
                 "How to-s",
-                "Interview", 
+                "Interview",
                 "News"
-            };            
+            };
 
             var categories = new Category[6];
 
@@ -82,8 +84,8 @@ namespace Sandbox
                     Name = categoryNames[i]
                 };
 
-           
-            categories[i] = category;
+
+                categories[i] = category;
 
             }
 
@@ -95,7 +97,6 @@ namespace Sandbox
         private static Article[] ReadArticles()
         {
 
-
             string path = Directory.GetCurrentDirectory() + "//articles.txt";
             var text = File.ReadAllLines(path);
             var articles = new Article[13];
@@ -106,18 +107,18 @@ namespace Sandbox
                 {
                     continue;
                 }
-                string title = text[i];
-                string content = text[i + 1];
+                string title = Regex.Replace(text[i], @"[^\u0000-\u007F]+", string.Empty); 
+                string content = Regex.Replace(text[i + 1], @"[^\u0000-\u007F]+", string.Empty);
 
                 var article = new Article
                 {
-                Title = title,
-                Content = content
+                    Title = title,
+                    Content = content
                 };
 
                 articles[index] = article;
                 i++;
-                index++;             
+                index++;
 
             }
             return articles;
@@ -129,12 +130,12 @@ namespace Sandbox
                 .AddJsonFile("appsettings.json", false, true)
                 .AddEnvironmentVariables()
                 .Build();
-                       
+
             services.AddDbContext<ParagraphContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection")));
-                       
-        services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
 
         }
     }

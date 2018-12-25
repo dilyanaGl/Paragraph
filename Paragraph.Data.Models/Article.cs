@@ -23,6 +23,6 @@ namespace Paragraph.Data.Models
 
         public bool IsApproved { get; set; }
 
-
+      //  public DateTime PublishedDate { get; set; } = DateTime.UtcNow;
     }
 }

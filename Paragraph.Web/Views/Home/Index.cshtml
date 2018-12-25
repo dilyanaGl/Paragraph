@@ -1,5 +1,22 @@
-﻿@{
+﻿@model Paragraph.Services.DataServices.Models.Home.IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
+
+}
+
+<div class="row">
+@foreach (var article in Model.Articles)
+{
+    <div class="col-md-4">
+        <div class="panel panel-default"></div>
+        <div class="panel-heading">@article.Title</div>
+        <div class="panel-body">@article.Content</div>
+        <div class="panel-footer">
+            @article.Category
+<a class="btn btn-default btn-sm" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">Details</a>
+        </div>
+    </div>
 }
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

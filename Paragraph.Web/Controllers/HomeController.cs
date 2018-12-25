@@ -8,11 +8,23 @@ using Paragraph.Web.Models;
 
 namespace Paragraph.Web.Controllers
 {
-    public class HomeController : Controller
+    using Paragraph.Services.DataServices.Models.Home;
+    using Paragraph.Services.DataServices;
+
+    public class HomeController : BaseController
     {
+
+        private readonly IArticleService articleService;
+
+        public HomeController(IArticleService articleService)
+        {
+            this.articleService = articleService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = articleService.GetArticles(10);
+            return View(model);
         }
 
         public IActionResult About()
