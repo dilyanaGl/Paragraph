@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paragraph.Data.Common\Paragraph.Data.Common.csproj" />
+    <ProjectReference Include="..\Paragraph.Data.Models\Paragraph.Data.Models.csproj" />
+    <ProjectReference Include="..\Paragraph.Data\Paragraph.Data.csproj" />
+    <ProjectReference Include="..\Paragraph.Serices.Mapping\Paragraph.Services.Mapping.csproj" />
+  </ItemGroup>
+
+</Project>
