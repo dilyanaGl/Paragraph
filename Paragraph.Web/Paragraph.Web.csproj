@@ -17,6 +17,7 @@
     <ProjectReference Include="..\Paragraph.Data\Paragraph.Data.csproj" />
     <ProjectReference Include="..\Paragraph.Serices.Mapping\Paragraph.Services.Mapping.csproj" />
     <ProjectReference Include="..\Paragraph.Services.DataServices\Paragraph.Services.DataServices.csproj" />
+    <ProjectReference Include="..\Paragraph.Services.MachineLearning\Paragraph.Services.MachineLearning.csproj" />
   </ItemGroup>
 
 </Project>

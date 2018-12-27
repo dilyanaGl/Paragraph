@@ -20,7 +20,7 @@ namespace Paragraph.Services.DataServices.Models.Home
 
         public string HtmlContent { get => String.Join("", this.Content.Replace("\n", "<br />\n").Take(100).ToArray()); }
 
-        public string Category { get; set; }
+        public string CategoryName { get; set; }
 
         public int Id { get; set; }
     }

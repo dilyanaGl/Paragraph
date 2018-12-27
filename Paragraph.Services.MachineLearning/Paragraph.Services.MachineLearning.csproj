@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="0.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paragraph.Services.DataServices\Paragraph.Services.DataServices.csproj" />
+  </ItemGroup>
+
 </Project>

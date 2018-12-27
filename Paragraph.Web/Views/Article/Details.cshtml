@@ -1,4 +1,6 @@
-﻿@model Paragraph.Services.DataServices.Models.Article.ArticleViewModel
+﻿@using System.Web;
+
+@model Paragraph.Services.DataServices.Models.Article.ArticleViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -25,6 +27,7 @@
             @Html.DisplayNameFor(model => model.CategoryName)
         </dt>
         <dd>
+         
             @Html.DisplayFor(model => model.CategoryName)
         </dd>
     </dl>

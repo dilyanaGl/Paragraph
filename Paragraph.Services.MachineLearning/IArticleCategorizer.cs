@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Paragraph.Services.MachineLearning
 {
-    interface IArticleCategorizer
+    public interface IArticleCategorizer
     {
+        string Categorize(string modelFile, string articleContent);
     }
 }

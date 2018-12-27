@@ -23,6 +23,12 @@ namespace Paragraph.Web.Controllers
             this.categoryService = categoryService;
         }
 
+        public IActionResult Details(int id)
+        {
+            var joke = this.articleService.GetArticleById(id);
+            return this.View(joke);
+        }
+
         [Authorize]
         public IActionResult Create()
         {
@@ -49,10 +55,6 @@ namespace Paragraph.Web.Controllers
             return this.RedirectToAction("Details", new { id = id});
         }
 
-        public IActionResult Details(int id)
-        {
-            var joke = this.articleService.GetArticleById(id);
-            return this.View(joke);
-        }
+        
     }
 }

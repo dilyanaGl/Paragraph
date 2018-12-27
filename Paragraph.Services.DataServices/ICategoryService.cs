@@ -8,5 +8,8 @@ namespace Paragraph.Services.DataServices
     {
         IEnumerable<IdAndNameModel> GetCategories();
         bool IsCategoryVald(int categoryId);
+        ListCategoriesModel ListCategoriesAndCount();
+        CategoryWithArticlesModel GetCategoryWithArticles(int id);
+
     }
 }

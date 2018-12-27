@@ -23,6 +23,7 @@ namespace Paragraph.Web
     using Services.Mapping;
     using Services.DataServices.Models.Article;
     using Services.DataServices.Models.Home;
+    using Services.MachineLearning;
 
     public class Startup
     {
@@ -52,9 +53,11 @@ namespace Paragraph.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
+            //Register MachineLearning algoritm
 
-            // Application Services:
+            services.AddScoped<IArticleCategorizer, ArticleCategorizer>();
+
+            // Register Application Services:
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient<IArticleService, ArticleService>();
@@ -68,6 +71,8 @@ namespace Paragraph.Web
                 typeof(IndexArticleViewModel).Assembly
                 );
 
+
+            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

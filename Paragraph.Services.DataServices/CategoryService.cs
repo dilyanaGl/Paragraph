@@ -10,7 +10,7 @@ namespace Paragraph.Services.DataServices
     using Data;
     using Models.Category;
     using System.Linq;
-    using System.ComponentModel.DataAnnotations;
+    using Paragraph.Services.Mapping;
 
     public class CategoryService : ICategoryService
     {
@@ -26,11 +26,12 @@ namespace Paragraph.Services.DataServices
         {
             var categories = this.categoryRepository
                 .All()
-                .Select(p => new IdAndNameModel
-                {
-                    Name = p.Name,
-                    Id = p.Id
-                })
+                .To<IdAndNameModel>()
+                 //.Select(p => new IdAndNameModel
+                //{
+                //    Name = p.Name,
+                //    Id = p.Id
+                //})
                 .ToArray();         
 
             return categories;
@@ -39,6 +40,30 @@ namespace Paragraph.Services.DataServices
         public bool IsCategoryVald(int categoryId)
         {
             return this.categoryRepository.All().Any(p => p.Id == categoryId);
+        }
+
+        public ListCategoriesModel ListCategoriesAndCount()
+        {
+            var categories = this.categoryRepository.All()
+                .OrderBy(p => p.Name)
+                .To<CategoryIdAndNameModel>().ToArray();
+
+            var model = new ListCategoriesModel
+            {
+                Categories = categories
+            };
+
+            return model;
+        }
+
+        public CategoryWithArticlesModel GetCategoryWithArticles(int id)
+        {
+            var model = this.categoryRepository.All().Where(p => p.Id == id)
+                .To<CategoryWithArticlesModel>()
+                .SingleOrDefault();
+
+            return model;
+
         }
     }
 }

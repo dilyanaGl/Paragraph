@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Paragraph.Services.DataServices
 {
-    public class IdAndNameModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class IdAndNameModel : IMapFrom<Category>
     {
         public string Name { get; set; }
 
