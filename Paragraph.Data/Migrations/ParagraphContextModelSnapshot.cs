@@ -171,6 +171,27 @@ namespace Paragraph.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Paragraph.Data.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int>("AuthorId");
+
+                    b.Property<string>("AuthorId1");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("AuthorId1");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("Paragraph.Data.Models.ParagraphUser", b =>
                 {
                     b.Property<string>("Id")
@@ -270,13 +291,25 @@ namespace Paragraph.Data.Migrations
             modelBuilder.Entity("Paragraph.Data.Models.Article", b =>
                 {
                     b.HasOne("Paragraph.Data.Models.ParagraphUser", "Author")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Paragraph.Data.Models.Category", "Category")
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Paragraph.Data.Models.Comment", b =>
+                {
+                    b.HasOne("Paragraph.Data.Models.Article", "Article")
+                        .WithMany("Comments")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Paragraph.Data.Models.ParagraphUser", "Author")
+                        .WithMany("Comment")
+                        .HasForeignKey("AuthorId1");
                 });
 #pragma warning restore 612, 618
         }

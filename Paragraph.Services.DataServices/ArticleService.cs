@@ -30,6 +30,7 @@ namespace Paragraph.Services.DataServices
         {
             var articles =  articleRepository.All().Take(num)
                 .To<IndexArticleViewModel>()
+
                 .ToArray();
 
             var model = new IndexViewModel { Articles = articles };
@@ -75,6 +76,31 @@ namespace Paragraph.Services.DataServices
                 .SingleOrDefault();
         }
 
+
+
+        public Task<int> Edit(ArticleViewModel model)
+        {
+            var article = this.articleRepository.All().Where(p => p.Id == model.Id)
+                .SingleOrDefault();
+
+            article.Title = model.Title;
+            article.Content = model.Content;
+
+            var category = this.categoryRepository.All().Where(p => p.Name == model.CategoryName).FirstOrDefault();
+            article.Category = category;
+
+            return this.articleRepository.SaveChangesAsync();
+            
+
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var article = this.articleRepository.All().Where(p => p.Id == id).SingleOrDefault();
+
+            this.articleRepository.Delete(article);
+            return await this.articleRepository.SaveChangesAsync();
+        }
      
 
        

@@ -23,7 +23,7 @@ namespace Paragraph.Web.Controllers
 
         public IActionResult Index()
         {
-            var model = articleService.GetArticles(10);
+            var model = articleService.GetArticles(9);
             return View(model);
         }
 

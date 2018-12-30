@@ -13,8 +13,10 @@ namespace Paragraph.Services.DataServices.Models.Article
 
         public string Content { get; set; }
 
-        public string HtmlContent { get => this.Content.TrimStart('?').Replace("\n", "<br />\n"); }
+        public string HtmlContent { get => this.Content == null ? null : this.Content.TrimStart('?'); }
 
         public string CategoryName { get; set; }
+
+        public int Id { get; set; }
     }
 }

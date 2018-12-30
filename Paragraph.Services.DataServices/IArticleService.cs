@@ -11,5 +11,8 @@ namespace Paragraph.Services.DataServices
         IndexViewModel GetArticles(int num);
         Task<int> Create(CreateArticleInputModel model, string username);
         ArticleViewModel GetArticleById(int id);
+        Task<int> Edit(ArticleViewModel model);
+       
+        Task<int> Delete(int id);
     }
 }

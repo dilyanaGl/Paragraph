@@ -23,10 +23,11 @@ namespace Paragraph.Web.Controllers
             this.categoryService = categoryService;
         }
 
+       
         public IActionResult Details(int id)
         {
-            var joke = this.articleService.GetArticleById(id);
-            return this.View(joke);
+            var model = this.articleService.GetArticleById(id);
+            return this.View(model);
         }
 
         [Authorize]
@@ -51,10 +52,41 @@ namespace Paragraph.Web.Controllers
             }
 
             var user = this.User.Identity.Name;
-            var id = this.articleService.Create(model, user);
-            return this.RedirectToAction("Details", new { id = id});
+            var id = this.articleService.Create(model, user).Result;
+            return this.Redirect("/home/index");
         }
 
-        
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var model = this.articleService.GetArticleById(id);
+            return this.View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(ArticleViewModel model)
+        {
+            this.articleService.Edit(model);
+            return this.RedirectToAction("Details", new { id = model.Id});        }
+
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var model = this.articleService.GetArticleById(id);
+            return this.View(model);
+        }
+
+     
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Delete(ArticleViewModel model)
+        {
+            this.articleService.Delete(model.Id);
+            return this.Redirect("/Home/Index");
+        }
     }
 }

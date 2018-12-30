@@ -12,10 +12,10 @@
         <div class="panel panel-default"></div>
         <div class="panel-heading">@article.Title</div>
         <div class="panel-body">
-        @Html.Raw(@article.HtmlContent)</div>
-        <div class="panel-footer">
+        @article.HtmlContent</div>
+        <div class="panel-footer justify-content-around">
             @article.CategoryName
-<a class="btn btn-default btn-sm" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">Details</a>
+<a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">Details</a>
         </div>
     </div>
 }

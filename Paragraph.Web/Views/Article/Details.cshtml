@@ -8,7 +8,7 @@
 
 <h2>Details</h2>
 
-<div>  
+<div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -18,21 +18,33 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Content)
+            Content
         </dt>
         <dd>
             @Html.DisplayFor(model => model.HtmlContent)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            Category
         </dt>
         <dd>
-         
+
             @Html.DisplayFor(model => model.CategoryName)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
+        <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>        
+        
+    }
+
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
+
+
+   
+
+

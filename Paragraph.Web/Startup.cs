@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,8 +47,25 @@ namespace Paragraph.Web
                     options.UseSqlServer(
                         this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ParagraphUser>()
-                .AddEntityFrameworkStores<ParagraphContext>();
+            services.AddIdentity<ParagraphUser, IdentityRole>(
+                options => {
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.User.RequireUniqueEmail = true;
+
+                })
+                
+                .AddEntityFrameworkStores<ParagraphContext>()
+                .AddDefaultUI()    
+                .AddRoles<IdentityRole>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<RoleManager<IdentityRole>>();
+            services.AddScoped
+                <IUserClaimsPrincipalFactory<IdentityUser>,
+                UserClaimsPrincipalFactory<IdentityUser, IdentityRole>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -62,6 +78,7 @@ namespace Paragraph.Web
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IUserService, UserService>();
 
 
             // Register Automapper
@@ -97,6 +114,10 @@ namespace Paragraph.Web
 
             app.UseMvc(routes =>
             {
+                //routes.MapRoute(
+                //  name: "areas",
+                //  template: "{area:exists}{controller=Category}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

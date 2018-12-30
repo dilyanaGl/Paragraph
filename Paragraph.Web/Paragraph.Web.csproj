@@ -20,4 +20,9 @@
     <ProjectReference Include="..\Paragraph.Services.MachineLearning\Paragraph.Services.MachineLearning.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Category\Models\" />
+    <Folder Include="Areas\Administration\Category\Views\" />
+  </ItemGroup>
+
 </Project>
