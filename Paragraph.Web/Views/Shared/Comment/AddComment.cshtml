@@ -1,0 +1,28 @@
+﻿@model Paragraph.Services.DataServices.Models.Comment.AddCommentModel
+
+@{ 
+    var data = new Dictionary<string, string>();
+    data.Add("articleId", ViewData["Id"].ToString());
+}
+
+<h3>Add Comment</h3>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Comment" asp-action="AddComment" asp-all-route-data="@data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="Content" class="control-label"></label>*@
+                <textarea asp-for="Content" class="form-control" rows="10" cols="30"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Comment" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
