@@ -6,10 +6,13 @@ namespace Paragraph.Services.DataServices.Models.Article
 {
     using Mapping;
     using Data.Models;
+    using Comment;
 
     public class ArticleViewModel : IMapFrom<Article>
     {
-        public String Title { get; set; }
+        private string title;
+
+        public String Title { get => this.title.TrimStart('?'); set => this.title = value; }
 
         public string Content { get; set; }
 
@@ -18,5 +21,9 @@ namespace Paragraph.Services.DataServices.Models.Article
         public string CategoryName { get; set; }
 
         public int Id { get; set; }
+
+        public IEnumerable<CommentViewModel> Comments { get; set; }
+
+        public AddCommentModel AddCommentModel { get; set; }
     }
 }

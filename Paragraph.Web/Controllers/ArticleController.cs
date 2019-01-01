@@ -16,11 +16,13 @@ namespace Paragraph.Web.Controllers
     {
         private readonly IArticleService articleService;
         private readonly ICategoryService categoryService;
+        private readonly ICommentService commentService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, ICommentService commentService)
         {
             this.articleService = articleService;
             this.categoryService = categoryService;
+            this.commentService = commentService;
         }
 
        

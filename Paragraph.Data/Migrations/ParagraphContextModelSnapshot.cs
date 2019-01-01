@@ -145,8 +145,6 @@ namespace Paragraph.Data.Migrations
 
                     b.Property<string>("Picture");
 
-                    b.Property<DateTime>("PublishedDate");
-
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
@@ -182,6 +180,10 @@ namespace Paragraph.Data.Migrations
                     b.Property<int>("AuthorId");
 
                     b.Property<string>("AuthorId1");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("PublishedOn");
 
                     b.HasKey("Id");
 

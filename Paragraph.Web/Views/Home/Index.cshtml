@@ -6,8 +6,10 @@
 }
 
 <div class="row">
-@foreach (var article in Model.Articles)
+@for(int i = 0; i < Model.Articles.Count; i++)
 {
+     var article = Model.Articles.ToArray()[i];
+   
     <div class="col-md-4">
         <div class="panel panel-default"></div>
         <div class="panel-heading">@article.Title</div>
@@ -18,7 +20,14 @@
 <a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">Details</a>
         </div>
     </div>
-}
+
+            @if(i % 3 == 2)
+            {
+                @:</div>                
+               @: <div>
+            }
+        }
+   </div>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

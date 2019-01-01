@@ -79,6 +79,7 @@ namespace Paragraph.Web
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICommentService, CommentService>();
 
 
             // Register Automapper

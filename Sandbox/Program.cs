@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Paragraph.Data.Common;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Sandbox
 {
@@ -31,8 +32,8 @@ namespace Sandbox
             {
                 serviceProvider = serviceScope.ServiceProvider;
 
-                SandboxCode(serviceProvider);
-
+              SandboxCode(serviceProvider);
+               
             }
         }
 
@@ -40,9 +41,9 @@ namespace Sandbox
         {
             var context = serviceProvider.GetService<ParagraphContext>();
 
-            //var categories = SeedCategories();
-            //context.Categories.AddRange(categories);
-            //context.SaveChanges();
+            var categories = SeedCategories();
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
 
             var articles = ReadArticles();
 
@@ -136,6 +137,9 @@ namespace Sandbox
                     configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddScoped<UserManager<ParagraphUser>>();
+            services.AddScoped<RoleManager<IdentityRole>>();
+
 
         }
     }

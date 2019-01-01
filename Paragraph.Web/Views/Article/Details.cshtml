@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Id"] = Model.Id;
 }
 
 <h2>Details</h2>
@@ -36,13 +37,18 @@
 
     @if (this.User.IsInRole("Admin"))
     {
-        <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
-        <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>        
-        
+        <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> @:|
+        <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a> @:|
+
     }
 
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
+
+<partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />
+
+<partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData"/>
+
 
 
    

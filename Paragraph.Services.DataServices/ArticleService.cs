@@ -9,6 +9,7 @@ namespace Paragraph.Services.DataServices
     using Paragraph.Data.Common;
     using Models.Home;
     using Models.Article;
+    using Models.Comment;
     using System.Threading.Tasks;
     using Paragraph.Services.Mapping;
     
@@ -18,12 +19,14 @@ namespace Paragraph.Services.DataServices
         private readonly IRepository<Data.Models.Article> articleRepository;
         private readonly IRepository<Data.Models.Category> categoryRepository;
         private readonly IRepository<Data.Models.ParagraphUser> userRepository;
+        private readonly IRepository<Comment> commentRepository;
 
-        public ArticleService(IRepository<Paragraph.Data.Models.Article> articleRepository, IRepository<Data.Models.Category> categoryRepository, IRepository<ParagraphUser> userRepository)
+        public ArticleService(IRepository<Paragraph.Data.Models.Article> articleRepository, IRepository<Data.Models.Category> categoryRepository, IRepository<ParagraphUser> userRepository, IRepository<Comment> commentRepository)
         {
             this.articleRepository = articleRepository;
             this.categoryRepository = categoryRepository;
             this.userRepository = userRepository;
+            this.commentRepository = commentRepository;
         }
 
         public IndexViewModel GetArticles(int num)
@@ -65,18 +68,16 @@ namespace Paragraph.Services.DataServices
 
         public ArticleViewModel GetArticleById(int id)
         {
-            return this.articleRepository.All().Where(p => p.Id == id)
+           var model = this.articleRepository.All().Where(p => p.Id == id)
                 .To<ArticleViewModel>()
-                //.Select(p => new ArticleViewModel
-                //{
-                //    Title = p.Title,
-                //    Content = p.Content, 
-                //    Category = p.Category.Name
-                //})
                 .SingleOrDefault();
+
+            model.Comments = this.commentRepository.All().Where(p => p.ArticleId == id)
+                .To<CommentViewModel>()
+                .ToArray();
+
+            return model; 
         }
-
-
 
         public Task<int> Edit(ArticleViewModel model)
         {
