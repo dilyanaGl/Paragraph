@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
+
 namespace Paragraph.Data
 {
     using Paragraph.Data.Models;
@@ -22,12 +23,30 @@ namespace Paragraph.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<Comment> Comment { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ArticleTag> ArticleTags { get; set; }
+        public DbSet<Request> Requests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            builder.Entity<Request>()
+                .HasOne(p => p.RequestReceiver)
+                .WithMany(p => p.RequestsReceived)
+                .HasForeignKey(p => p.RequestReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Request>()
+                .HasOne(p => p.RequestSender)
+                .WithMany(p => p.RequestsSent)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+           base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+
     }
 }

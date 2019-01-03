@@ -10,6 +10,7 @@ namespace Paragraph.Web.Areas.Administration.Category
 {
     using Services.DataServices;
 
+    [Authorize(Roles ="Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;    
@@ -18,6 +19,16 @@ namespace Paragraph.Web.Areas.Administration.Category
         {
             this.categoryService = categoryService;           
             
+        }
+
+        public void SetModelrator()
+        {
+
+        }
+
+        public void Add()
+        {
+
         }
 
         

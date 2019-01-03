@@ -12,5 +12,9 @@ namespace Paragraph.Data.Models
         public ICollection<Article> Articles { get; set; } = new HashSet<Article>();
 
         public ICollection<Comment> Comment { get; set; } = new HashSet<Comment>();
+
+        public ICollection<Request> RequestsSent { get; set; } = new HashSet<Request>();
+
+        public ICollection<Request> RequestsReceived { get; set; } = new HashSet<Request>();
     }
 }
