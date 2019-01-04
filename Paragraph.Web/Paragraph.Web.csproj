@@ -21,8 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Category\Models\" />
-    <Folder Include="Areas\Administration\Category\Views\" />
+    <Content Update="Views\Category\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Tag\" />
   </ItemGroup>
 
 </Project>

@@ -44,6 +44,12 @@ namespace Paragraph.Web.Controllers
             return View();
         }
 
+        public IActionResult All()
+        {
+            var articles = this.articleService.All();
+            return this.View(articles);
+        }
+
         [Authorize]
         [HttpPost]
         public IActionResult Create(CreateArticleInputModel model)

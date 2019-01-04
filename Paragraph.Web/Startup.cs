@@ -80,6 +80,7 @@ namespace Paragraph.Web
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ITagService, TagService>();
 
 
             // Register Automapper
@@ -117,7 +118,11 @@ namespace Paragraph.Web
             {
                 //routes.MapRoute(
                 //  name: "areas",
-                //  template: "{area:exists}{controller=Category}/{action=Index}/{id?}");
+                //  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                //routes.MapRoute(
+                //    name: "admin",
+                //    template: "/admin/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

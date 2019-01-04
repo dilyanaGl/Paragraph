@@ -31,6 +31,15 @@
 
             @Html.DisplayFor(model => model.CategoryName)
         </dd>
+        <dt>
+            Tags
+        </dt>
+        <dd>
+            @foreach (var tag in Model.TagNames)
+            {
+                <a class="btn btn-default" asp-controller="Tag" asp-action="Articles" asp-route-id="@tag.Id">@tag.Name</a> 
+            }
+        </dd>
     </dl>
 </div>
 <div>
@@ -42,7 +51,7 @@
 
     }
 
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">See other articles</a>
 </div>
 
 <partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />

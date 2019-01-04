@@ -9,9 +9,10 @@ namespace Paragraph.Services.DataServices.Models.Article
 
     public class ArticleIdAndName : IMapFrom<Article> 
     {
+        private string title;
 
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string Title { get => this.title.TrimStart('?'); set => this.title = value; }
     }
 }

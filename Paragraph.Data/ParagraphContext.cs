@@ -40,6 +40,18 @@ namespace Paragraph.Data
                 .WithMany(p => p.RequestsSent)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ArticleTag>()
+                .HasOne(p => p.Article)
+                .WithMany(p => p.Tags)
+                .HasForeignKey(p => p.ArticleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ArticleTag>()
+                .HasOne(p => p.Tag)
+                .WithMany(p => p.ArticleTags)
+                .HasForeignKey(p => p.TagId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
            base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.

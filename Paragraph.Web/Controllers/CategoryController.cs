@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Paragraph.Web.Controllers
 {
     using Services.DataServices;
+    using Services.DataServices.Models.Category;
 
     public class CategoryController : Controller
     {
@@ -34,5 +35,21 @@ namespace Paragraph.Web.Controllers
             var model = this.categoryService.GetCategoryWithArticles(id);
             return this.View(model);
         }
+
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="Admin")]
+        public IActionResult Create(AddCategoryModel model)
+        {
+            this.categoryService.AddCategory(model);
+            return this.All();
+        }
+
     }
 }

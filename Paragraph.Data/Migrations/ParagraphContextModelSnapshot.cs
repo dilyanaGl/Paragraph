@@ -145,6 +145,8 @@ namespace Paragraph.Data.Migrations
 
                     b.Property<string>("Picture");
 
+                    b.Property<DateTime>("PublishedDate");
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
@@ -154,6 +156,25 @@ namespace Paragraph.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Paragraph.Data.Models.ArticleTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ArticleTags");
                 });
 
             modelBuilder.Entity("Paragraph.Data.Models.Category", b =>
@@ -245,6 +266,38 @@ namespace Paragraph.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Paragraph.Data.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RequestReceiverId");
+
+                    b.Property<string>("RequestSenderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestReceiverId");
+
+                    b.HasIndex("RequestSenderId");
+
+                    b.ToTable("Requests");
+                });
+
+            modelBuilder.Entity("Paragraph.Data.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -302,6 +355,19 @@ namespace Paragraph.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Paragraph.Data.Models.ArticleTag", b =>
+                {
+                    b.HasOne("Paragraph.Data.Models.Article", "Article")
+                        .WithMany("Tags")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Paragraph.Data.Models.Tag", "Tag")
+                        .WithMany("ArticleTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Paragraph.Data.Models.Comment", b =>
                 {
                     b.HasOne("Paragraph.Data.Models.Article", "Article")
@@ -312,6 +378,19 @@ namespace Paragraph.Data.Migrations
                     b.HasOne("Paragraph.Data.Models.ParagraphUser", "Author")
                         .WithMany("Comment")
                         .HasForeignKey("AuthorId1");
+                });
+
+            modelBuilder.Entity("Paragraph.Data.Models.Request", b =>
+                {
+                    b.HasOne("Paragraph.Data.Models.ParagraphUser", "RequestReceiver")
+                        .WithMany("RequestsReceived")
+                        .HasForeignKey("RequestReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Paragraph.Data.Models.ParagraphUser", "RequestSender")
+                        .WithMany("RequestsSent")
+                        .HasForeignKey("RequestSenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

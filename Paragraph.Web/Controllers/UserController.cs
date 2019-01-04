@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Paragraph.Data.Models;
 using Paragraph.Services.DataServices;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Paragraph.Web.Controllers
 {
@@ -27,21 +29,32 @@ namespace Paragraph.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> SetAdmin()
+        [Authorize]
+        public IActionResult Profile()
         {
-            var user = this.userService.SetRandomAdmin();
-         
-            await roleManager.CreateAsync(new IdentityRole("Admin"));
-            await userManager.AddToRoleAsync(user, "Admin");
+            var model = this.userService.Details(this.User.Identity.Name);
+            var role = userManager.GetRolesAsync(this.userManager.GetUserAsync(this.User).Result);
 
-            return this.Content($"User with username {user.UserName} is set to Admin");
+            if (role == null)
+            {
+                model.Role = "User";
+            }
+            else
+            {
+                model.Role = String.Join(", ", role.Result.ToArray());
+            }
+
+            return this.View(model);
         }
 
-        public async Task<IActionResult> SetUserRole()
+        [HttpPost]
+        public IActionResult RequestRights()
         {
-            await roleManager.CreateAsync(new IdentityRole("User"));
-            return this.Conflict($"Role user is added to the database");
+            this.ViewData["Message"] = "Your request has been sent to the admin!";
+            return this.Index();
         }
+
+
 
     }
 }

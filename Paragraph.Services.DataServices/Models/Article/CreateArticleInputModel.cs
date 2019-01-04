@@ -20,5 +20,7 @@ namespace Paragraph.Services.DataServices.Models.Article
 
         [ValidCategoryId]
         public int CategoryId { get; set; }
+
+        public string Tags { get; set; }
     }
 }
