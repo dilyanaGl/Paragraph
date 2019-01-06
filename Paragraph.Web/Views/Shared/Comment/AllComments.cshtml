@@ -5,11 +5,14 @@
     data.Add("articleId", ViewData["Id"].ToString());
 }
 
+<h3>All Comments</h3>
+
+<hr/>
+
 @foreach (var comment in Model)
 {
 @:<div class="col-md-12">
     <div class="panel panel-default"></div>
-    <div class="panel-body">@comment.AuthorName</div>
     <div class="panel-footer">
         <div class="row justify-content-around">
         @comment.Content  

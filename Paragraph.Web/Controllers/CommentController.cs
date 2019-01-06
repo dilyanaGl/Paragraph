@@ -28,12 +28,12 @@ namespace Paragraph.Web.Controllers
         }
 
         
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin, Moderator")]
         public IActionResult Delete(int commentId, int articleId)
         {
             this.commentService.Delete(commentId);
             return this.RedirectToAction("Details", "Article", new { Id = articleId });
-            return this.RedirectToAction("Index", "Home");
+            //return this.RedirectToAction("Index", "Home");
         }
         
     }

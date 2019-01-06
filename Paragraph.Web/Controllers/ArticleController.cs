@@ -17,25 +17,39 @@ namespace Paragraph.Web.Controllers
         private readonly IArticleService articleService;
         private readonly ICategoryService categoryService;
         private readonly ICommentService commentService;
+        private readonly ITagService tagService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, ICommentService commentService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, ICommentService commentService, ITagService tagService)
         {
             this.articleService = articleService;
             this.categoryService = categoryService;
             this.commentService = commentService;
+            this.tagService = tagService;
         }
 
        
         public IActionResult Details(int id)
         {
             var model = this.articleService.GetArticleById(id);
+            this.ViewData["Tags"] = this.tagService.TagsForArticle(id).Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
+            });
             return this.View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin, Writer")]
         public IActionResult Create()
         {
             this.ViewData["Categories"] = categoryService.GetCategories()
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                });
+
+            this.ViewData["Tags"] = tagService.All()
                 .Select(p => new SelectListItem
                 {
                     Value = p.Id.ToString(),
@@ -50,7 +64,7 @@ namespace Paragraph.Web.Controllers
             return this.View(articles);
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin, Writer")]
         [HttpPost]
         public IActionResult Create(CreateArticleInputModel model)
         {
@@ -60,18 +74,18 @@ namespace Paragraph.Web.Controllers
             }
 
             var user = this.User.Identity.Name;
-            var id = this.articleService.Create(model, user).Result;
+           this.articleService.Create(model, user);
             return this.Redirect("/home/index");
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin, Writer")]
         public IActionResult Edit(int id)
         {
             var model = this.articleService.GetArticleById(id);
             return this.View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin, Writer")]
         [HttpPost]
         public IActionResult Edit(ArticleViewModel model)
         {
@@ -79,22 +93,22 @@ namespace Paragraph.Web.Controllers
             return this.RedirectToAction("Details", new { id = model.Id});        }
 
 
-        [HttpGet]
-        [Authorize]
-        public IActionResult Delete(int id)
-        {
-            var model = this.articleService.GetArticleById(id);
-            return this.View(model);
-        }
+        //[HttpGet]
+        //[Authorize(Roles ="Admin")]
+        //public IActionResult Delete(int id)
+        //{
+        //    var model = this.articleService.GetArticleById(id);
+        //    return this.View(model);
+        //}
 
      
 
-        [HttpPost]
-        [Authorize]
-        public IActionResult Delete(ArticleViewModel model)
-        {
-            this.articleService.Delete(model.Id);
-            return this.Redirect("/Home/Index");
-        }
+        //[HttpPost]
+        //[Authorize(Roles ="Admin")]
+        //public IActionResult Delete(ArticleViewModel model)
+        //{
+        //    this.articleService.Delete(model.Id);
+        //    return this.Redirect("/Home/Index");
+        //}
     }
 }

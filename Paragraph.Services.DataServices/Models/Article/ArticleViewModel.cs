@@ -8,12 +8,13 @@ namespace Paragraph.Services.DataServices.Models.Article
     using Data.Models;
     using Comment;
     using AutoMapper;
+    using Tag;
 
     public class ArticleViewModel : IMapFrom<Article>, IHaveCustomMappings
     {
         private string title;
 
-        public String Title { get => this.title.TrimStart('?'); set => this.title = value; }
+        public String Title { get => this.title == null ? null : this.title.TrimStart('?'); set => this.title = value; }
 
         public string Content { get; set; }
 
@@ -28,6 +29,8 @@ namespace Paragraph.Services.DataServices.Models.Article
         public AddCommentModel AddCommentModel { get; set; }
 
         public IEnumerable<IdAndNameModel> TagNames { get; set; }
+
+        public CreateTagModel AddTagModel { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {

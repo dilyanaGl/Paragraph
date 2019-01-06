@@ -276,11 +276,17 @@ namespace Paragraph.Data.Migrations
 
                     b.Property<string>("RequestSenderId");
 
+                    b.Property<string>("RoleId");
+
+                    b.Property<int>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RequestReceiverId");
 
                     b.HasIndex("RequestSenderId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Requests");
                 });
@@ -391,6 +397,10 @@ namespace Paragraph.Data.Migrations
                         .WithMany("RequestsSent")
                         .HasForeignKey("RequestSenderId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

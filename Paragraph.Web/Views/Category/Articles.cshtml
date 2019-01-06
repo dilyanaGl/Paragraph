@@ -11,17 +11,28 @@
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
-              
-        @foreach(var article in Model.Articles)
-        {
-      
-            <dt><strong>@article.Title</strong></dt>
-            <dd><a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">Read All</a></dd>
-        <br />
-        }
-    </dl>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Articles)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        <a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@item.Id">Read Article</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 </div>
 <div>   

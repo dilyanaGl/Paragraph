@@ -8,6 +8,7 @@ using Paragraph.Data.Models;
 using Paragraph.Services.DataServices;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Paragraph.Web.Controllers
 {
@@ -15,13 +16,15 @@ namespace Paragraph.Web.Controllers
     {
         private readonly UserManager<ParagraphUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IRequestService requestService;
         private readonly IUserService userService;
 
-        public UserController(UserManager<ParagraphUser> userManager, RoleManager<IdentityRole> roleManager, IUserService userService)
+        public UserController(UserManager<ParagraphUser> userManager, RoleManager<IdentityRole> roleManager, IUserService userService, IRequestService requestService)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.userService = userService;
+            this.requestService = requestService;
         }
 
         public IActionResult Index()
@@ -33,26 +36,18 @@ namespace Paragraph.Web.Controllers
         public IActionResult Profile()
         {
             var model = this.userService.Details(this.User.Identity.Name);
-            var role = userManager.GetRolesAsync(this.userManager.GetUserAsync(this.User).Result);
-
-            if (role == null)
-            {
-                model.Role = "User";
-            }
-            else
-            {
-                model.Role = String.Join(", ", role.Result.ToArray());
-            }
+            
+            this.ViewData["Roles"] = this.requestService.GetAllRoles(this.User.Identity.Name)
+                .Select(p => new SelectListItem
+                {
+                    Text = p, 
+                    Value = p
+                });               
 
             return this.View(model);
         }
 
-        [HttpPost]
-        public IActionResult RequestRights()
-        {
-            this.ViewData["Message"] = "Your request has been sent to the admin!";
-            return this.Index();
-        }
+     
 
 
 

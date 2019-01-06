@@ -6,17 +6,20 @@
 
 }
 
-<h1>@ViewData["Message"]</h1>
-
+@if(this.User.Identity.IsAuthenticated)
+{
 <h1>@String.Concat(ViewData["Greeting"], this.User.Identity.Name)</h1>
+}
+<br/>
+<br/>
 <div class="row">
 @for(int i = 0; i < Model.Articles.Count; i++)
 {
      var article = Model.Articles.ToArray()[i];
    
-    <div class="col-md-4">
+    <div class="col-md-10">
         <div class="panel panel-default"></div>
-        <div class="panel-heading">@article.Title</div>
+        <div class="panel-heading"><h4>@article.Title</h4></div>
         <div class="panel-body">
         @article.HtmlContent</div>
         <div class="panel-footer justify-content-around">
@@ -25,11 +28,11 @@
         </div>
     </div>
 
-            @if(i % 3 == 2)
+            @*@if(i % 3 == 2)
             {
                 @:</div>                
                @: <div>
-            }
+            }*@
         }
    </div>
 

@@ -81,6 +81,7 @@ namespace Paragraph.Web
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ITagService, TagService>();
+            services.AddTransient<IRequestService, RequestService>();
 
 
             // Register Automapper

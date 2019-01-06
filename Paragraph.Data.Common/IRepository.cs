@@ -11,10 +11,12 @@ namespace Paragraph.Data.Common
 
         IQueryable<TEntity> All();
 
-        Task AddAsync(TEntity entity);
+        void AddAsync(TEntity entity);
 
         void Delete(TEntity entity);
+
+        void AddMany(IEnumerable<TEntity> entities);
                
-        Task<int> SaveChangesAsync();
+        void SaveChangesAsync();
     }
 }

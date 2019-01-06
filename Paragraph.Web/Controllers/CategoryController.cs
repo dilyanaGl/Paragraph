@@ -21,7 +21,7 @@ namespace Paragraph.Web.Controllers
             
         }
 
-        [Authorize]
+        
         public IActionResult All()
         {
             var categories = this.categoryService.ListCategoriesAndCount();
@@ -37,14 +37,14 @@ namespace Paragraph.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin, Moderator")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin, Moderator")]
         public IActionResult Create(AddCategoryModel model)
         {
             this.categoryService.AddCategory(model);

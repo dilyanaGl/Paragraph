@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Paragraph.Data.Common\Paragraph.Data.Common.csproj" />
     <ProjectReference Include="..\Paragraph.Data.Models\Paragraph.Data.Models.csproj" />
     <ProjectReference Include="..\Paragraph.Data\Paragraph.Data.csproj" />

@@ -5,19 +5,15 @@
 @{
     ViewData["Title"] = "Details";
     ViewData["Id"] = Model.Id;
+
+    var tags = this.ViewData["Tags"] as IEnumerable<SelectListItem>;
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
         <dt>
             Content
         </dt>
@@ -37,26 +33,42 @@
         <dd>
             @foreach (var tag in Model.TagNames)
             {
-                <a class="btn btn-default" asp-controller="Tag" asp-action="Articles" asp-route-id="@tag.Id">@tag.Name</a> 
+                <a class="btn btn-default" asp-controller="Tag" asp-action="Details" asp-route-id="@tag.Id">@tag.Name</a> 
             }
         </dd>
     </dl>
 </div>
 <div>
 
-    @if (this.User.IsInRole("Admin"))
+    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Writer"))
     {
         <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> @:|
-        <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a> @:|
+        @*<a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a> @:|*@
+    }
+    <a asp-controller="Home" asp-action="Index">See other articles</a>
 
+    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+    { 
+        <hr />
+    <partial name="Tag/AddTag" model="@Model.AddTagModel" view-data="ViewData" />
     }
 
-    <a asp-controller="Home" asp-action="Index">See other articles</a>
+
 </div>
+
+<br/>
+<br/>
+<hr/>
 
 <partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />
 
-<partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData"/>
+@if(this.User.Identity.IsAuthenticated)
+{
+<partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData" />
+}
+
+
+
 
 
 

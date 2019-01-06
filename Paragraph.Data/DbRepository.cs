@@ -25,9 +25,14 @@ namespace Paragraph.Data
 
         }
 
-        public Task AddAsync(TEntity entity)
+        public void AddAsync(TEntity entity)
         {
-            return this.dbSet.AddAsync(entity);
+            this.dbSet.Add(entity);
+        }
+
+        public void AddMany(IEnumerable<TEntity> entities)
+        {
+            this.dbSet.AddRange(entities);
         }
 
         public IQueryable<TEntity> All()
@@ -45,9 +50,9 @@ namespace Paragraph.Data
             this.context.Dispose();
         }
 
-        public Task<int> SaveChangesAsync()
+        public void SaveChangesAsync()
         {
-            return this.context.SaveChangesAsync();
+            this.context.SaveChanges();
         }
     }
 }
