@@ -3,15 +3,18 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["Greeting"] = "Welcome, ";
+    ViewData["Error"] = "";
 
 }
+
+<h2>@ViewData["Error"]</h2>
 
 @if(this.User.Identity.IsAuthenticated)
 {
 <h1>@String.Concat(ViewData["Greeting"], this.User.Identity.Name)</h1>
 }
 <br/>
-<br/>
+
 <div class="row">
 @for(int i = 0; i < Model.Articles.Count; i++)
 {

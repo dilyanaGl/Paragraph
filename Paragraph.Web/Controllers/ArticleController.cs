@@ -27,9 +27,16 @@ namespace Paragraph.Web.Controllers
             this.tagService = tagService;
         }
 
-       
+
+
         public IActionResult Details(int id)
         {
+            if(!this.articleService.DoesArticleExist(id))
+            {
+                this.ViewData["Error"] = "Article does not exist.";
+                return this.RedirectToAction("Index", "Home");
+            }
+
             var model = this.articleService.GetArticleById(id);
             this.ViewData["Tags"] = this.tagService.TagsForArticle(id).Select(p => new SelectListItem
             {
@@ -39,7 +46,8 @@ namespace Paragraph.Web.Controllers
             return this.View(model);
         }
 
-        [Authorize(Roles ="Admin, Writer")]
+        [HttpGet]
+        [Authorize(Roles = "Admin, Writer")]
         public IActionResult Create()
         {
             this.ViewData["Categories"] = categoryService.GetCategories()
@@ -58,40 +66,42 @@ namespace Paragraph.Web.Controllers
             return View();
         }
 
-       
+
         public IActionResult All()
         {
             var articles = this.articleService.All();
+
             return this.View(articles);
         }
 
-        [Authorize(Roles ="Admin, Writer")]
+        [Authorize(Roles = "Admin, Writer")]
         [HttpPost]
         public IActionResult Create(CreateArticleInputModel model)
         {
-           if(!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
             var user = this.User.Identity.Name;
-           this.articleService.Create(model, user);
+            this.articleService.Create(model, user);
             return this.Redirect("/home/index");
         }
 
-        [Authorize(Roles ="Admin, Writer")]
+        [Authorize(Roles = "Admin, Writer")]
         public IActionResult Edit(int id)
         {
             var model = this.articleService.GetArticleById(id);
             return this.View(model);
         }
 
-        [Authorize(Roles ="Admin, Writer")]
+        [Authorize(Roles = "Admin, Writer")]
         [HttpPost]
         public IActionResult Edit(ArticleViewModel model)
         {
             this.articleService.Edit(model);
-            return this.RedirectToAction("Details", new { id = model.Id});        }
+            return this.RedirectToAction("Details", new { id = model.Id });
+        }
 
 
         //[HttpGet]
@@ -102,7 +112,7 @@ namespace Paragraph.Web.Controllers
         //    return this.View(model);
         //}
 
-     
+
 
         //[HttpPost]
         //[Authorize(Roles ="Admin")]

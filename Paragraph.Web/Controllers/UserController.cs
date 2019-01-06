@@ -27,10 +27,10 @@ namespace Paragraph.Web.Controllers
             this.requestService = requestService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [Authorize]
         public IActionResult Profile()
@@ -45,11 +45,6 @@ namespace Paragraph.Web.Controllers
                 });               
 
             return this.View(model);
-        }
-
-     
-
-
-
+        }     
     }
 }
