@@ -20,7 +20,6 @@ namespace Paragraph.Web.Controllers
             this.categoryService = categoryService;
             
         }
-
         
         public IActionResult All()
         {
@@ -28,8 +27,7 @@ namespace Paragraph.Web.Controllers
 
             return View(categories);
         }
-
-        [Authorize]
+                
         public IActionResult Articles(int id)
         {
             if(!this.categoryService.DoesCategoryExist(id))

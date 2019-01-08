@@ -11,74 +11,87 @@
 
 <h2>@Model.Title</h2>
 
-<div>
+<div class="container">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Content
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HtmlContent)
-        </dd>
-        <dt>
-            Category
-        </dt>
-        <dd>
 
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-        <dt>
-            Tags
-        </dt>
-        <dd>
-            @foreach (var tag in Model.TagNames)
-            {
-                <a class="btn btn-default" asp-controller="Tag" asp-action="Details" asp-route-id="@tag.Id">@tag.Name</a> 
-            }
-        </dd>
-    </dl>
-</div>
-<div>
+    <div class="col-md-offset-1 glyphicon-align-justify">
+        @Model.Content
+    </div>
+    <br />
+    <br />
+    <div class="col-md-10">
+        <dl class="dl-horizontal">
 
-    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Writer"))
-    {
-        <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> @:|
-        @*<a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a> @:|*@
-    }
-    <a asp-controller="Home" asp-action="Index">See other articles</a>
+            <dt> </dt>
+            <dd> </dd>
+            <dt> </dt>
+            <dd> </dd>
 
-    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
-    { 
+            <dt>
+                Category
+            </dt>
+            <dd>
+
+                @Html.DisplayFor(model => model.CategoryName)
+            </dd>
+            </dl>
+        <br/>
+        <br/>
+        <dl class="dl-horizontal">
+           
+            <dt>
+                Tags
+            </dt>
+            <dd>
+                @foreach (var tag in Model.TagNames)
+                {
+                    <a class="btn btn-default" asp-controller="Tag" asp-action="Details" asp-route-id="@tag.Id">@tag.Name</a>
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-8">
+
+        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Writer"))
+        {
+            <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> @:|
+            @*<a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id">Delete</a> @:|*@
+        }
+        <a asp-controller="Article" asp-action="All">See other articles</a>
+
+        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+        {
+            <hr />
+            <partial name="Tag/AddTag" model="@Model.AddTagModel" view-data="ViewData" />
+        }
+
+
+    </div>
+
+    <div class="col-md-10">
+        <br />
         <hr />
-    <partial name="Tag/AddTag" model="@Model.AddTagModel" view-data="ViewData" />
-    }
 
+        <partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />
 
+        <br />
+        <br />
+
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <br />
+            <br />
+            <hr />
+
+            <partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData" />
+        }
+
+    </div>
 </div>
 
 
-<br/>
-<hr/>
-
-<partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />
-
-<br/>
-<br/>
-
-@if(this.User.Identity.IsAuthenticated)
-{
-    <br/>
-    <br/>
-    <hr/>
-
-<partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData" />
-}
 
 
-
-
-
-
-   
 
 

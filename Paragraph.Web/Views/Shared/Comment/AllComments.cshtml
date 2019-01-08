@@ -1,39 +1,42 @@
 ﻿@model IEnumerable<Paragraph.Services.DataServices.Models.Comment.CommentViewModel>
 
-@{ 
+@{
     var data = new Dictionary<String, String>();
     data.Add("articleId", ViewData["Id"].ToString());
 }
 
 <h3>All Comments</h3>
 
-<hr/>
+<hr />
 
 @foreach (var comment in Model)
 {
-@:<div class="col-md-12">
-    <div class="panel panel-default"></div>
-    <div class="panel-footer">
-        <div class="row justify-content-around">
-        @comment.Content  
+    @:<div class="col-md-12">
+        <div class="panel panel-default"></div>
+        <div class="panel-footer">
+            <div class="row justify-content-around">
+                @comment.Content
 
-        @comment.PublishedOn
-        
-        @if (User.IsInRole("Admin"))
-                {
-          data["commentId"] = comment.Id.ToString();
-            <a class="btn btn-default" asp-controller="Comment" asp-action="Delete" asp-all-route-data="data">Delete</a>
+                <div class="glyphicon-object-align-right">
+                    @*@comment.PublishedOn*@
 
-        }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        data["commentId"] = comment.Id.ToString();
+                        <a class="btn btn-default" asp-controller="Comment" asp-action="Delete" asp-all-route-data="data">Delete</a>
+
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-   
+
     @:</div>
+
 
 }
 
 
 
-             
 
-      
+
+

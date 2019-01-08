@@ -18,7 +18,7 @@ namespace Paragraph.Services.DataServices.Models.Home
 
         public string Content { get => this.content.TrimStart('?'); set => this.content = value; }
 
-        public string HtmlContent { get => String.Join("", this.Content.Replace("\n", "<br />\n").Take(100).ToArray()); }
+        public string HtmlContent { get => String.Concat(String.Join("", this.Content.Replace("\n", "<br />\n").Take(700).ToArray()), "..."); }
 
         public string CategoryName { get; set; }
 
