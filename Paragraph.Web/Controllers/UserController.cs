@@ -36,6 +36,15 @@ namespace Paragraph.Web.Controllers
         public IActionResult Profile()
         {
             var model = this.userService.Details(this.User.Identity.Name);
+
+            if(this.User.IsInRole("Admin"))
+            {
+                model.RequestModels = this.requestService.GetAdminRequests(this.User.Identity.Name);
+            }
+            else
+            {
+                model.RequestModels = this.requestService.GetUserRequests(this.User.Identity.Name);
+            }
             
             this.ViewData["Roles"] = this.requestService.GetAllRoles(this.User.Identity.Name)
                 .Select(p => new SelectListItem

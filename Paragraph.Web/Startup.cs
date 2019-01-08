@@ -47,18 +47,20 @@ namespace Paragraph.Web
                     options.UseSqlServer(
                         this.Configuration.GetConnectionString("DefaultConnection")));
 
+
+
             services.AddIdentity<ParagraphUser, IdentityRole>(
                 options => {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 6;
                     options.Password.RequireLowercase = true;
                     options.Password.RequireNonAlphanumeric = true;
-                    options.User.RequireUniqueEmail = true;
+                    options.User.RequireUniqueEmail = true;                 
 
-                })
-                
+
+                })                
                 .AddEntityFrameworkStores<ParagraphContext>()
-                .AddDefaultUI()    
+                .AddDefaultUI()
                 .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders();
 
@@ -68,6 +70,14 @@ namespace Paragraph.Web
                 UserClaimsPrincipalFactory<IdentityUser, IdentityRole>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString("/");
+
+            });
+
+          
 
             //Register MachineLearning algoritm
 
@@ -91,6 +101,7 @@ namespace Paragraph.Web
                 typeof(IndexArticleViewModel).Assembly
                 );
 
+           
 
             //
         }
@@ -114,6 +125,7 @@ namespace Paragraph.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            //app.UseCookieAuthentication(new C);
 
             app.UseMvc(routes =>
             {
