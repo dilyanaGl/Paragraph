@@ -129,9 +129,9 @@ namespace Paragraph.Web
 
             app.UseMvc(routes =>
             {
-                //routes.MapRoute(
-                //  name: "areas",
-                //  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 //routes.MapRoute(
                 //    name: "admin",
