@@ -84,8 +84,8 @@ namespace Paragraph.Web.Controllers
             }
 
             var user = this.User.Identity.Name;
-            this.articleService.Create(model, user);
-            return this.Redirect("/home/index");
+            int id = this.articleService.Create(model, user);
+            return this.RedirectToAction("Article", "Details", new { id = id});
         }
 
         [Authorize(Roles = "Admin, Writer")]

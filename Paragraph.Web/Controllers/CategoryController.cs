@@ -57,7 +57,7 @@ namespace Paragraph.Web.Controllers
                 return this.View(model);
             }
             this.categoryService.AddCategory(model);
-            return this.All();
+            return this.RedirectToAction("All", "Category");
         }
 
     }

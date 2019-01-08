@@ -56,14 +56,21 @@
 
 </div>
 
-<br/>
+
 <br/>
 <hr/>
 
 <partial name="Comment/AllComments" model="@Model.Comments" view-data="ViewData" />
 
+<br/>
+<br/>
+
 @if(this.User.Identity.IsAuthenticated)
 {
+    <br/>
+    <br/>
+    <hr/>
+
 <partial name="Comment/AddComment" model="@Model.AddCommentModel" view-data="ViewData" />
 }
 

@@ -25,7 +25,7 @@ namespace Paragraph.Web.Controllers
         [HttpPost]
         public IActionResult AddComment(AddCommentModel model, int articleId)
         {
-            if (this.articleService.DoesArticleExist(articleId))
+            if (!this.articleService.DoesArticleExist(articleId))
             {
                 this.ViewData["Error"] = "Article does not exist.";
                 return this.RedirectToAction("Index", "Home");
