@@ -76,6 +76,7 @@ namespace Paragraph.Web.Controllers
 
         [Authorize(Roles = "Admin, Writer")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CreateArticleInputModel model)
         {
             if (!this.ModelState.IsValid)
@@ -92,7 +93,7 @@ namespace Paragraph.Web.Controllers
 
             var user = this.User.Identity.Name;
             int id = this.articleService.Create(model, user);
-            return this.RedirectToAction("Article", "Details", new { id = id});
+            return this.RedirectToAction("Details", "Article", new { id = id});
         }
 
         [Authorize(Roles = "Admin, Writer")]
@@ -104,6 +105,7 @@ namespace Paragraph.Web.Controllers
 
         [Authorize(Roles = "Admin, Writer")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(ArticleViewModel model)
         {
             this.articleService.Edit(model);

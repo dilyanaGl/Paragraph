@@ -23,6 +23,7 @@ namespace Paragraph.Web.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddComment(AddCommentModel model, int articleId)
         {
             if (!this.articleService.DoesArticleExist(articleId))

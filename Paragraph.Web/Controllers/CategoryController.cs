@@ -33,7 +33,7 @@ namespace Paragraph.Web.Controllers
             if(!this.categoryService.DoesCategoryExist(id))
             {
                 this.ViewData["Error"] = "Category does not exist.";
-                return this.All();
+                return this.RedirectToAction("All", "Category");
             }
             var model = this.categoryService.GetCategoryWithArticles(id);
             return this.View(model);
@@ -48,6 +48,7 @@ namespace Paragraph.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles ="Admin, Moderator")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(AddCategoryModel model)
         {
             if (!this.ModelState.IsValid)

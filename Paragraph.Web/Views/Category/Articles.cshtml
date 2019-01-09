@@ -12,6 +12,12 @@
 <div>
     <hr />
 
+    @if(this.Model.Articles.Count() == 0)
+    {
+    <p>There are no articles in that category!</p>
+    }
+    else
+    {
     <table class="table">
         <thead>
             <tr>
@@ -33,6 +39,8 @@
             }
         </tbody>
     </table>
+    }
+    
 
 </div>
 <div>   
