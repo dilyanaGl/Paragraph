@@ -57,8 +57,6 @@ namespace Paragraph.Web
                     options.Password.RequireNonAlphanumeric = true;
                     options.User.RequireUniqueEmail = true;    
                     
-
-
                 })                
                 .AddEntityFrameworkStores<ParagraphContext>()
                 .AddDefaultUI()
@@ -75,6 +73,7 @@ namespace Paragraph.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = new PathString("/");
+                
 
             });
 

@@ -80,6 +80,13 @@ namespace Paragraph.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
+                this.ViewData["Categories"] = categoryService.GetCategories()
+               .Select(p => new SelectListItem
+               {
+                   Value = p.Id.ToString(),
+                   Text = p.Name
+               });
+
                 return this.View(model);
             }
 
