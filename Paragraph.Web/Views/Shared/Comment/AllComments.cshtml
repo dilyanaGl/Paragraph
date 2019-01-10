@@ -20,7 +20,7 @@
                 <div class="glyphicon-object-align-right">
                     @*@comment.PublishedOn*@
 
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                     {
                         data["commentId"] = comment.Id.ToString();
                         <a class="btn btn-default" asp-controller="Comment" asp-action="Delete" asp-all-route-data="data">Delete</a>
