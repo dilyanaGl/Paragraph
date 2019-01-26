@@ -1,0 +1,29 @@
+﻿@model Paragraph.Services.DataServices.Models.Tag.AddTagModel
+
+@{
+
+    var tags = this.ViewData["Tags"] as IEnumerable<SelectListItem>;
+}
+
+<h4>Add Tag</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <form class="form-inline" asp-controller="Tag" asp-action="AddTag" asp-route-id="@ViewData["Id"]">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TagId" class="control-label">Tag</label>
+                <select asp-for="TagId" asp-items="tags" class="form-control"></select>
+                <span asp-validation-for="TagId" class="text-danger"></span>
+
+            </div>     
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

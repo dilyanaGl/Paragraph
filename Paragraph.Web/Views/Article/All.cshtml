@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Paragraph.Services.DataServices.Models.Article.ArticleIdAndName>
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h2>All Articles</h2>
+
+@if (this.User.IsInRole("Admin") || this.User.IsInRole("Writer"))
+{
+    <p>
+        <a asp-controller="Article" asp-action="Create">Create New</a>
+    </p>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@item.Id">Read All</a>
+                    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Writer"))
+                    {
+                        <a class="btn btn-default" asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                       
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

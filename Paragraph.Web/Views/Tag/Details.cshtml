@@ -1,0 +1,43 @@
+﻿@model Paragraph.Services.DataServices.Models.Tag.TagViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>@Model.Name</h2>
+
+@if (this.Model.Articles.Count() == 0)
+{
+    <p>There are no articles with that tag!</p>
+}
+else
+{
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Articles)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@item.Id">Read All</a>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+<div>
+    <a asp-controller="Tag" asp-action="All">Back to List</a>
+</div>

@@ -1,0 +1,67 @@
+﻿@model Paragraph.Services.DataServices.Models.User.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Error"] = "";
+    var roles = this.ViewData["Roles"] as IEnumerable<SelectListItem>;
+
+}
+
+@if(!String.IsNullOrWhiteSpace(ViewData["Error"].ToString()))
+{
+<h2>ViewData["Error"]</h2>
+}
+
+<h2>Your Profile</h2>
+
+
+<h3>@Model.Username - @Model.Role</h3>
+<p>@ViewData["Message"]</p>
+<br />
+<hr />
+<h2>Your articles</h2>
+@if (Model.Articles.Count == 0)
+{
+    @:<p>You have not written any articles yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Articles)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        <a class="btn btn-default" asp-controller="Article" asp-action="Details" asp-route-id="@item.Id">Read All</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<br/>
+
+<partial name="Request/ListRequests" model="@Model.RequestModels" />
+
+<br />
+@if (!this.User.IsInRole("Admin") && roles.Count() > 0)
+{
+    <partial name="Request/MakeRequest" model="@Model.MakeRequestModel" view-data="ViewData" />
+}
+<br/>
+<br/>
+<div>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>

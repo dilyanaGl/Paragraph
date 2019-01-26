@@ -1,0 +1,39 @@
+﻿@model Paragraph.Services.DataServices.Models.Request.RequestModel
+
+@{
+
+    var roles = this.ViewData["Roles"] as IEnumerable<SelectListItem>;
+}
+
+<h2>Request a role</h2>
+<hr />
+<div class="row">
+    
+        <form class="form-inline" asp-controller="Request" asp-action="MakeRequest">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">              
+                <select  asp-for="Role" asp-items="roles" class="form-control col-md-10"></select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Role" class="control-label"></label>
+                    <input asp-for="Role" class="form-control" />
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <input type="submit" value="Make Request" class="btn btn-default" />
+            </div>
+        </form>
+  
+</div>
+
+
+
+

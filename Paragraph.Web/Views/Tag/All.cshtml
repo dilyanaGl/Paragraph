@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Paragraph.Services.DataServices.Models.Tag.TagIdAndNameModel>
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h2>All Tags</h2>
+
+@if (this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+{
+    <p>
+        <a asp-controller="Tag" asp-action="Create">Create New</a>
+    </p>
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a class="btn btn-default" asp-controller="Tag" asp-action="Details" asp-route-id="@item.Id">See All Articles</a>
+                 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
